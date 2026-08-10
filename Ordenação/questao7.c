@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <locale.h>
 
 #define NUM_PACOTES 8
 
@@ -41,15 +42,18 @@ void imprimir_precos(float precos[], int tamanho) {
 }
 
 int main(void) {
+
+    setlocale(LC_ALL, ""); /* para permitir acentos no terminal*/
+
     float precos[NUM_PACOTES] = {1899.90f, 750.00f, 3200.50f, 499.99f,
                                   2150.00f, 890.75f, 1250.30f, 640.00f};
 
-    printf("----- Precos ANTES da ordenacao -----\n");
+    printf("----- Precos Antes da Ordenacao -----\n");
     imprimir_precos(precos, NUM_PACOTES);
 
     bubble_sort(precos, NUM_PACOTES);
 
-    printf("\n----- Precos DEPOIS da ordenacao (mais barato -> mais caro) -----\n");
+    printf("\n----- Precos Depois da Ordenacao (mais barato -> mais caro) -----\n");
     imprimir_precos(precos, NUM_PACOTES);
 
     return 0;

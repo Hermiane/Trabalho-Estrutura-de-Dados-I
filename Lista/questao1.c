@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <locale.h>
 
 /* Estrutura do nó da lista encadeada (item do carrinho) */
 typedef struct Item {
@@ -66,7 +67,7 @@ void imprimir_carrinho(Item *cabeca) {
 
     printf("----- Carrinho de Compras -----\n");
     while (atual != NULL) {
-        printf("Item %d -> ID: %d | Qtd: %d | Preco: R$ %.2f | Subtotal: R$ %.2f\n",
+        printf("Item %d -> ID: %d | Qtd: %d | Preço: R$ %.2f | Subtotal: R$ %.2f\n",
                contador, atual->id_produto, atual->quantidade,
                atual->preco, atual->quantidade * atual->preco);
         atual = atual->proximo;
@@ -88,6 +89,9 @@ void liberar_carrinho(Item *cabeca) {
 }
 
 int main(void) {
+
+    setlocale(LC_ALL, ""); /* para permitir acentos no terminal*/
+
     Item *carrinho = criar_carrinho();
 
     inserir_item(&carrinho, 101, 2, 15.90f);
