@@ -53,7 +53,7 @@ int main(void) {
 
     bubble_sort(precos, NUM_PACOTES);
     
-    printf("\n----- Depois da Ordenação -----\n");
+    printf("\n   ----- Depois da Ordenação -----\n");
     printf("\n----- Preços dos Pacotes (mais barato -> mais caro) -----\n");
     imprimir_precos(precos, NUM_PACOTES);
 
