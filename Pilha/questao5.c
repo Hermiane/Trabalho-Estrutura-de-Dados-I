@@ -27,7 +27,7 @@ void criar_pilha(Pilha *pilha) {
 void empilhar_caixa(Pilha *pilha, const char *codigo_rastreio) {
     Caixa *nova = (Caixa *) malloc(sizeof(Caixa));
     if (nova == NULL) {
-        fprintf(stderr, "Erro: falha ao alocar memória.\n");
+        fprintf(stderr, "Erro: falha ao alocar memoria.\n");
         exit(EXIT_FAILURE);
     }
 
@@ -107,7 +107,7 @@ void liberar_pilha(Pilha *pilha) {
 
 int main(void) {
 
-    setlocale(LC_ALL, ""); /* para permitir acentos no terminal*/
+    setlocale(LC_ALL, ""); // para permitir acentos na escrita
     Pilha palete;
     criar_pilha(&palete);
 

@@ -42,36 +42,6 @@ void inserir_item(Item **cabeca, int id_produto, int quantidade, float preco) {
     atual->proximo = novo;
 }
 
-/* NOVA FUNCAO: permite que o cliente adicione um item digitando os dados
- * pelo teclado, em tempo de execucao. Reaproveita inserir_item por baixo. */
-void adicionar_item_cliente(Item **cabeca) {
-    int id_produto, quantidade;
-    float preco;
-
-    printf("\n--- Adicionar novo item ao carrinho ---\n");
-
-    printf("ID do produto: ");
-    while (scanf("%d", &id_produto) != 1) {
-        printf("Entrada inválida. Digite um número inteiro para o ID: ");
-        while (getchar() != '\n'); /* limpa o buffer em caso de entrada errada */
-    }
-
-    printf("Quantidade: ");
-    while (scanf("%d", &quantidade) != 1 || quantidade <= 0) {
-        printf("Quantidade inválida. Digite um número inteiro maior que zero: ");
-        while (getchar() != '\n');
-    }
-
-    printf("Preço unitário (ex: 19,90): ");
-    while (scanf("%f", &preco) != 1 || preco < 0) {
-        printf("Preço inválido. Digite um número válido: ");
-        while (getchar() != '\n');
-    }
-
-    inserir_item(cabeca, id_produto, quantidade, preco);
-    printf("Item adicionado com sucesso!\n");
-}
-
 /* Calcula o valor total do carrinho (soma de quantidade * preco) */
 float calcular_total(Item *cabeca) {
     float total = 0.0f;
@@ -83,13 +53,6 @@ float calcular_total(Item *cabeca) {
     }
 
     return total;
-}
-
-/* NOVA FUNCAO: calcula e exibe o valor final do carrinho,
- * de forma mais "fechada" (pronta para ser chamada no fim da compra). */
-void calcular_valor_final(Item *cabeca) {
-    float total = calcular_total(cabeca);
-    printf("\n===== VALOR FINAL DO CARRINHO: R$ %.2f =====\n", total);
 }
 
 /* Exibe todos os itens do carrinho */
@@ -104,7 +67,7 @@ void imprimir_carrinho(Item *cabeca) {
 
     printf("----- Carrinho de Compras -----\n");
     while (atual != NULL) {
-        printf("Item %d -> ID: %d | Qtd: %d | Preço: R$ %.2f | Subtotal: R$ %.2f\n",
+        printf("Item %d -> ID: %d | Qtd: %d | Preco: R$ %.2f | Subtotal: R$ %.2f\n",
                contador, atual->id_produto, atual->quantidade,
                atual->preco, atual->quantidade * atual->preco);
         atual = atual->proximo;
@@ -126,32 +89,18 @@ void liberar_carrinho(Item *cabeca) {
 }
 
 int main(void) {
- 
-    setlocale(LC_ALL, ""); /* para permitir acentos no terminal*/   
+
+    setlocale(LC_ALL, ""); // para permitir acentos na escrita
     Item *carrinho = criar_carrinho();
 
-    /* Itens iniciais, ja no carrinho */
     inserir_item(&carrinho, 101, 2, 15.90f);
     inserir_item(&carrinho, 102, 1, 89.50f);
     inserir_item(&carrinho, 103, 3, 4.75f);
 
-    printf("Carrinho inicial:\n");
     imprimir_carrinho(carrinho);
 
-    /* Menu para o cliente adicionar novos itens */
-    char opcao;
-    do {
-        printf("\nDeseja adicionar um novo item ao carrinho? (s/n): ");
-        scanf(" %c", &opcao);
-
-        if (opcao == 's' || opcao == 'S') {
-            adicionar_item_cliente(&carrinho);
-            imprimir_carrinho(carrinho);
-        }
-    } while (opcao == 's' || opcao == 'S');
-
-    /* Calcula e exibe o valor final, ja com os itens adicionados pelo cliente */
-    calcular_valor_final(carrinho);
+    float total = calcular_total(carrinho);
+    printf("\nValor total do carrinho: R$ %.2f\n", total);
 
     liberar_carrinho(carrinho);
     carrinho = NULL;

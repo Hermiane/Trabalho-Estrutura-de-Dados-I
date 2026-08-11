@@ -1,5 +1,4 @@
 #include <stdio.h>
-#include <string.h>
 #include <locale.h>
 
 #define NUM_POSICOES 15
@@ -17,8 +16,7 @@ int busca_linear(int vetor[], int tamanho, int codigo_procurado) {
 
 int main(void) {
 
-    setlocale(LC_ALL, ""); /* para permitir acentos no terminal*/
-
+     setlocale(LC_ALL, ""); // para permitir acentos na escrita
     /* vetor nao ordenado, representando as 15 posicoes do galpao */
     int codigos_barras[NUM_POSICOES] = {
         78341, 12905, 55210, 90312, 43120,
@@ -28,20 +26,20 @@ int main(void) {
 
     int codigo_digitado;
 
-    printf("----- Posições do galpão -----\n");
+    printf("----- Posicoes do galpao -----\n");
     for (int i = 0; i < NUM_POSICOES; i++) {
-        printf("Posição %2d -> Código: %d\n", i, codigos_barras[i]);
+        printf("Posicao %2d -> Codigo: %d\n", i, codigos_barras[i]);
     }
 
-    printf("\nDigite o código de barras a ser localizado: ");
+    printf("\nDigite o codigo de barras a ser localizado: ");
     scanf("%d", &codigo_digitado);
 
     int indice = busca_linear(codigos_barras, NUM_POSICOES, codigo_digitado);
 
     if (indice != -1) {
-        printf("\nCódigo %d encontrado na posição %d do galpão.\n", codigo_digitado, indice);
+        printf("\nCodigo %d encontrado na posicao %d do galpao.\n", codigo_digitado, indice);
     } else {
-        printf("\nCódigo %d não encontrado no galpão.\n", codigo_digitado);
+        printf("\nCodigo %d nao encontrado no galpao.\n", codigo_digitado);
     }
 
     return 0;

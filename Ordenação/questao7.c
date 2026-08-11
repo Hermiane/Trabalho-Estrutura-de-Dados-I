@@ -43,18 +43,16 @@ void imprimir_precos(float precos[], int tamanho) {
 
 int main(void) {
 
-    setlocale(LC_ALL, ""); /* para permitir acentos no terminal*/
-
+    setlocale(LC_ALL, ""); // para permitir acentos na escrita
     float precos[NUM_PACOTES] = {1899.90f, 750.00f, 3200.50f, 499.99f,
                                   2150.00f, 890.75f, 1250.30f, 640.00f};
 
-    printf("----- Precos Antes da Ordenação -----\n");
+    printf("----- Precos ANTES da ordenacao -----\n");
     imprimir_precos(precos, NUM_PACOTES);
 
     bubble_sort(precos, NUM_PACOTES);
-    
-    printf("\n   ----- Depois da Ordenação -----\n");
-    printf("\n----- Preços dos Pacotes (mais barato -> mais caro) -----\n");
+
+    printf("\n----- Precos DEPOIS da ordenacao (mais barato -> mais caro) -----\n");
     imprimir_precos(precos, NUM_PACOTES);
 
     return 0;
