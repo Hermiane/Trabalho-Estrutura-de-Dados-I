@@ -127,7 +127,7 @@ void liberar_carrinho(Item *cabeca) {
 
 int main(void) {
 
-    serlocale(LC_ALL, "");
+    setlocale(LC_ALL, "");
     Item *carrinho = criar_carrinho();
 
     /* Itens iniciais, ja no carrinho */
