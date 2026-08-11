@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <string.h>
 #include <locale.h>
 
 #define NUM_POSICOES 15
@@ -16,7 +17,7 @@ int busca_linear(int vetor[], int tamanho, int codigo_procurado) {
 
 int main(void) {
 
-    setlocale(LC_ALL, ""); // para permitir acentos no terminal
+    setlocale(LC_ALL, ""); /* para permitir acentos no terminal*/
 
     /* vetor nao ordenado, representando as 15 posicoes do galpao */
     int codigos_barras[NUM_POSICOES] = {

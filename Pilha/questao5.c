@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <locale.h>
 
 #define TAM_CODIGO 30
 
@@ -26,7 +27,7 @@ void criar_pilha(Pilha *pilha) {
 void empilhar_caixa(Pilha *pilha, const char *codigo_rastreio) {
     Caixa *nova = (Caixa *) malloc(sizeof(Caixa));
     if (nova == NULL) {
-        fprintf(stderr, "Erro: falha ao alocar memoria.\n");
+        fprintf(stderr, "Erro: falha ao alocar memória.\n");
         exit(EXIT_FAILURE);
     }
 
@@ -105,6 +106,8 @@ void liberar_pilha(Pilha *pilha) {
 }
 
 int main(void) {
+
+    setlocale(LC_ALL, ""); /* para permitir acentos no terminal*/
     Pilha palete;
     criar_pilha(&palete);
 

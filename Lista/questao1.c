@@ -126,8 +126,8 @@ void liberar_carrinho(Item *cabeca) {
 }
 
 int main(void) {
-
-    setlocale(LC_ALL, "Portuguese");
+ 
+    setlocale(LC_ALL, ""); /* para permitir acentos no terminal*/   
     Item *carrinho = criar_carrinho();
 
     /* Itens iniciais, ja no carrinho */

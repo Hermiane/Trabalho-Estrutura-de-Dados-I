@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <locale.h>
 
 #define TAM_NOME 50
 
@@ -30,7 +31,7 @@ void criar_fila(Fila *fila) {
 void enfileirar_turista(Fila *fila, const char *nome, int idade) {
     Turista *novo = (Turista *) malloc(sizeof(Turista));
     if (novo == NULL) {
-        fprintf(stderr, "Erro: falha ao alocar memoria.\n");
+        fprintf(stderr, "Erro: falha ao alocar memória.\n");
         exit(EXIT_FAILURE);
     }
 
@@ -50,6 +51,31 @@ void enfileirar_turista(Fila *fila, const char *nome, int idade) {
 
     fila->tamanho++;
     printf("Enfileirado: %s (%d anos)\n", novo->nome, novo->idade);
+}
+
+/* NOVA FUNCAO: permite que o operador cadastre um novo visitante
+ * digitando nome e idade pelo teclado, em tempo de execucao.
+ * Reaproveita enfileirar_turista por baixo. */
+void cadastrar_visitante(Fila *fila) {
+    char nome[TAM_NOME];
+    int idade;
+
+    printf("\n--- Cadastrar novo visitante na fila ---\n");
+
+    printf("Nome do visitante: ");
+    getchar(); /* limpa o '\n' deixado no buffer por uma leitura anterior */
+    fgets(nome, TAM_NOME, stdin);
+
+    /* fgets inclui o '\n' digitado; removemos ele se estiver presente */
+    nome[strcspn(nome, "\n")] = '\0';
+
+    printf("Idade do visitante: ");
+    while (scanf("%d", &idade) != 1 || idade <= 0) {
+        printf("Idade inválida. Digite um número inteiro maior que zero: ");
+        while (getchar() != '\n'); /* limpa entrada inválida do buffer */
+    }
+
+    enfileirar_turista(fila, nome, idade);
 }
 
 /* Remove e atende o turista do INICIO da fila.
@@ -83,7 +109,7 @@ void proximo_da_fila(Fila *fila) {
         printf("Fila vazia.\n");
         return;
     }
-    printf("Proximo da fila: %s (%d anos)\n", fila->inicio->nome, fila->inicio->idade);
+    printf("Próximo da fila: %s (%d anos)\n", fila->inicio->nome, fila->inicio->idade);
 }
 
 /* Exibe todos os turistas atualmente na fila, em ordem */
@@ -122,12 +148,17 @@ void liberar_fila(Fila *fila) {
 }
 
 int main(void) {
+
+    setlocale(LC_ALL, ""); /* para permitir acentos no terminal*/
     Fila fila;
     criar_fila(&fila);
 
     enfileirar_turista(&fila, "Ana Souza", 22);
     enfileirar_turista(&fila, "Bruno Lima", 15);
-    enfileirar_turista(&fila, "Carla Mendes", 34);
+
+    /* Em vez de Carla ja vir fixa no codigo, o operador cadastra
+     * a nova visitante digitando nome e idade pelo teclado. */
+    cadastrar_visitante(&fila);
 
     printf("\n");
     imprimir_fila(&fila);
@@ -138,6 +169,7 @@ int main(void) {
     printf("\n");
     atender_turista(&fila); /* atende Ana */
     atender_turista(&fila); /* atende Bruno */
+    atender_turista(&fila); /* atende a visitante cadastrada */
 
     printf("\n");
     imprimir_fila(&fila);
