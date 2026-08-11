@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <locale.h>
 
 /* Estrutura do nó da lista encadeada (item do carrinho) */
 typedef struct Item {
@@ -51,19 +52,19 @@ void adicionar_item_cliente(Item **cabeca) {
 
     printf("ID do produto: ");
     while (scanf("%d", &id_produto) != 1) {
-        printf("Entrada invalida. Digite um numero inteiro para o ID: ");
+        printf("Entrada inválida. Digite um número inteiro para o ID: ");
         while (getchar() != '\n'); /* limpa o buffer em caso de entrada errada */
     }
 
     printf("Quantidade: ");
     while (scanf("%d", &quantidade) != 1 || quantidade <= 0) {
-        printf("Quantidade invalida. Digite um numero inteiro maior que zero: ");
+        printf("Quantidade inválida. Digite um número inteiro maior que zero: ");
         while (getchar() != '\n');
     }
 
-    printf("Preco unitario (ex: 19.90): ");
+    printf("Preço unitário (ex: 19,90): ");
     while (scanf("%f", &preco) != 1 || preco < 0) {
-        printf("Preco invalido. Digite um numero valido: ");
+        printf("Preço inválido. Digite um número válido: ");
         while (getchar() != '\n');
     }
 
@@ -103,7 +104,7 @@ void imprimir_carrinho(Item *cabeca) {
 
     printf("----- Carrinho de Compras -----\n");
     while (atual != NULL) {
-        printf("Item %d -> ID: %d | Qtd: %d | Preco: R$ %.2f | Subtotal: R$ %.2f\n",
+        printf("Item %d -> ID: %d | Qtd: %d | Preço: R$ %.2f | Subtotal: R$ %.2f\n",
                contador, atual->id_produto, atual->quantidade,
                atual->preco, atual->quantidade * atual->preco);
         atual = atual->proximo;
@@ -125,6 +126,8 @@ void liberar_carrinho(Item *cabeca) {
 }
 
 int main(void) {
+
+    serlocale(LC_ALL, "");
     Item *carrinho = criar_carrinho();
 
     /* Itens iniciais, ja no carrinho */
