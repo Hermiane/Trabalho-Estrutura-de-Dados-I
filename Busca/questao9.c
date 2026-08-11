@@ -1,45 +1,53 @@
 #include <stdio.h>
 #include <locale.h>
 
-#define NUM_POSICOES 15
+#define TAM_VETOR 15
 
-/* Busca linear: percorre o vetor do inicio ao fim procurando o codigo_barras.
- * Retorna o indice onde o codigo foi encontrado, ou -1 se nao existir. */
-int busca_linear(int vetor[], int tamanho, int codigo_procurado) {
-    for (int i = 0; i < tamanho; i++) {
-        if (vetor[i] == codigo_procurado) {
-            return i; /* encontrou: retorna o indice imediatamente */
+/* Realiza busca linear no vetor, retornando o indice onde encontrou
+ * o codigo_barras procurado, ou -1 se nao existir no vetor. */
+int busca_linear(int codigos[], int tamanho, int codigo_procurado) {
+    int i;
+
+    for (i = 0; i < tamanho; i++) {
+        if (codigos[i] == codigo_procurado) {
+            return i; /* encontrou: retorna a posicao imediatamente */
         }
     }
-    return -1; /* percorreu tudo e nao achou */
+
+    return -1; /* percorreu o vetor inteiro e nao achou */
+}
+
+/* Exibe todas as posicoes do galpao e seus respectivos codigos */
+void imprimir_galpao(int codigos[], int tamanho) {
+    int i;
+    printf("----- Mapa do Galpao -----\n");
+    for (i = 0; i < tamanho; i++) {
+        printf("Posicao %2d: codigo %d\n", i, codigos[i]);
+    }
+    printf("---------------------------\n");
 }
 
 int main(void) {
 
-     setlocale(LC_ALL, ""); // para permitir acentos na escrita
-    /* vetor nao ordenado, representando as 15 posicoes do galpao */
-    int codigos_barras[NUM_POSICOES] = {
-        78341, 12905, 55210, 90312, 43120,
-        67810, 21453, 88732, 30298, 15674,
-        99001, 40567, 62890, 71345, 25908
+    setlocale(LC_ALL, "");
+    int codigos[TAM_VETOR] = {
+        78341, 12903, 55672, 90218, 33456,
+        67789, 10245, 88761, 45123, 29984,
+        61230, 74501, 15678, 39902, 82345
     };
 
-    int codigo_digitado;
+    imprimir_galpao(codigos, TAM_VETOR);
 
-    printf("----- Posicoes do galpao -----\n");
-    for (int i = 0; i < NUM_POSICOES; i++) {
-        printf("Posicao %2d -> Codigo: %d\n", i, codigos_barras[i]);
-    }
+    int codigo_procurado;
+    printf("\nDigite o codigo de barras a buscar: ");
+    scanf("%d", &codigo_procurado);
 
-    printf("\nDigite o codigo de barras a ser localizado: ");
-    scanf("%d", &codigo_digitado);
+    int posicao = busca_linear(codigos, TAM_VETOR, codigo_procurado);
 
-    int indice = busca_linear(codigos_barras, NUM_POSICOES, codigo_digitado);
-
-    if (indice != -1) {
-        printf("\nCodigo %d encontrado na posicao %d do galpao.\n", codigo_digitado, indice);
+    if (posicao != -1) {
+        printf("Codigo %d encontrado na posicao %d.\n", codigo_procurado, posicao);
     } else {
-        printf("\nCodigo %d nao encontrado no galpao.\n", codigo_digitado);
+        printf("Codigo %d nao encontrado no galpao.\n", codigo_procurado);
     }
 
     return 0;

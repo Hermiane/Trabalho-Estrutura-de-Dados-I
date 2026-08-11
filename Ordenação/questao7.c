@@ -1,34 +1,35 @@
 #include <stdio.h>
 #include <locale.h>
 
-#define NUM_PACOTES 8
+#define TAM_VETOR 8
 
-/* Troca o conteudo de duas variaveis float (passadas por endereco) */
+/* Troca o conteudo de duas posicoes de memoria (usado dentro do bubble sort) */
 void trocar(float *a, float *b) {
     float temp = *a;
     *a = *b;
     *b = temp;
 }
 
-/* Ordena o vetor de precos usando Bubble Sort (ordem crescente) */
+/* Ordena o vetor de precos em ordem crescente usando Bubble Sort */
 void bubble_sort(float precos[], int tamanho) {
-    int troquei;
+    int i, j;
+    int trocou;
 
-    for (int i = 0; i < tamanho - 1; i++) {
-        troquei = 0; /* flag de otimizacao */
+    for (i = 0; i < tamanho - 1; i++) {
+        trocou = 0; /* flag de otimizacao: se nao houve troca, o vetor ja esta ordenado */
 
-        /* a cada passada, o maior elemento "borbulha" ate o final,
+        /* a cada passagem, o maior elemento "borbulha" ate o final,
          * por isso o limite direito diminui (tamanho - 1 - i) */
-        for (int j = 0; j < tamanho - 1 - i; j++) {
+        for (j = 0; j < tamanho - 1 - i; j++) {
             if (precos[j] > precos[j + 1]) {
                 trocar(&precos[j], &precos[j + 1]);
-                troquei = 1;
+                trocou = 1;
             }
         }
 
-        /* se nao houve nenhuma troca nesta passada,
-         * o vetor ja esta ordenado -> encerra mais cedo */
-        if (troquei == 0) {
+        /* se nenhuma troca ocorreu nesta passagem, o vetor ja esta ordenado
+         * e as passagens seguintes seriam desnecessarias */
+        if (trocou == 0) {
             break;
         }
     }
@@ -36,24 +37,25 @@ void bubble_sort(float precos[], int tamanho) {
 
 /* Exibe o vetor de precos formatado */
 void imprimir_precos(float precos[], int tamanho) {
-    for (int i = 0; i < tamanho; i++) {
+    int i;
+    for (i = 0; i < tamanho; i++) {
         printf("Pacote %d: R$ %.2f\n", i + 1, precos[i]);
     }
 }
 
 int main(void) {
+    
+    setlocale(LC_ALL, "");
+    float precos[TAM_VETOR] = {2350.90f, 899.00f, 4500.50f, 1200.00f,
+                                 780.25f, 3999.99f, 550.00f, 2100.75f};
 
-    setlocale(LC_ALL, ""); // para permitir acentos na escrita
-    float precos[NUM_PACOTES] = {1899.90f, 750.00f, 3200.50f, 499.99f,
-                                  2150.00f, 890.75f, 1250.30f, 640.00f};
+    printf("----- Precos antes da ordenacao -----\n");
+    imprimir_precos(precos, TAM_VETOR);
 
-    printf("----- Precos ANTES da ordenacao -----\n");
-    imprimir_precos(precos, NUM_PACOTES);
+    bubble_sort(precos, TAM_VETOR);
 
-    bubble_sort(precos, NUM_PACOTES);
-
-    printf("\n----- Precos DEPOIS da ordenacao (mais barato -> mais caro) -----\n");
-    imprimir_precos(precos, NUM_PACOTES);
+    printf("\n----- Precos ordenados (mais barato -> mais caro) -----\n");
+    imprimir_precos(precos, TAM_VETOR);
 
     return 0;
 }

@@ -1,5 +1,6 @@
 # Caso você tenha problema em compilar e executar seu código, siga as instruções abaixo:
-
+ATENÇÂO: já existe o arquivo taks.json na estrutura do projeto, mas caso não funcione por falta 
+de configuração ou você não entenda, criamos esse arquivo.
 
 #Passo 1: Criar/editar o tasks.json
 
